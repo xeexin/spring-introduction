@@ -3,33 +3,32 @@ package spring.springintroduction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import spring.springintroduction.repository.JdbcMemberRepository;
-import spring.springintroduction.repository.JdbcTemplateMemberRepository;
-import spring.springintroduction.repository.MemberRepository;
-import spring.springintroduction.repository.MemoryMemberRepository;
+import spring.springintroduction.repository.*;
 import spring.springintroduction.service.MemberService;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
-    private DataSource dataSource;
+    private final MemberRepository memberRepository;
 
-    @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    @Autowired //생성자 하나면 생랴가능
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
+
     public MemberService memberService() {
-        return new MemberService(memberRepository() );
+        return new MemberService(memberRepository);
     }
 
-    @Bean
+   /* @Bean
     public MemberRepository memberRepository() {
         //return new MemoryMemberRepository();
         //return new JdbcMemberRepository(dataSource);
-        return new JdbcTemplateMemberRepository(dataSource);
-    }
-
+        //return new JdbcTemplateMemberRepository(dataSource);
+        //return new JpaMemberRepository(em);
+    }*/
 }
