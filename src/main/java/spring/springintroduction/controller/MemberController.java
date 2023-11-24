@@ -17,6 +17,7 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("MEMBER SERVICE : " +memberService.getClass()); // 멤버 서비스 코드 복제 후
     }
 
     @GetMapping("/members/new")
